@@ -16,7 +16,8 @@
       validate () {
         this.$refs.form.validate()
       },
-      required: (v) => !!v || 'This field is required'
+      required: (v) => !!v || 'This field is required',
+      isBeforeNow: (d) => new Date(d) <= new Date()
     }
   }
 </script>
@@ -86,13 +87,13 @@
           <v-switch
             v-model="form.is_dead"
             label="This project is dead?"
-            data-cy="project-id-dead"
+            data-cy="project-is-dead"
           ></v-switch>
         </v-col>
       </v-row>
 
       <v-row v-if="form.is_dead" class="justify-center text-center mt-5">
-        <v-col cols="8" data-cy="project-is-dead-container">
+        <v-col cols="8" data-cy="project-death-date-container">
           <v-label>
             <span>Select the project death date</span>
             <span class="mandatory">*</span>
@@ -100,6 +101,7 @@
           <v-date-picker
             v-model="form.death_date"
             :rules="[required]"
+            :allowed-dates="isBeforeNow"
             data-cy="project-death-date"
           ></v-date-picker>
         </v-col>
