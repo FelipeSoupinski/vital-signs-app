@@ -6,8 +6,9 @@
       valid: true,
       form: {
         name: '',
-        tagStackOverflow: null,
-        linkGitHub: null,
+        tag_so: null,
+        link_gh: null,
+        is_dead: false,
       }
     }),
 
@@ -35,7 +36,7 @@
         </v-col>
       </v-row>
 
-      <v-row class="justify-center text-center mt-15">
+      <v-row class="justify-center text-center mt-5">
         <v-col cols="8" data-cy="project-name-container">
           <v-text-field
             v-model="form.name"
@@ -50,10 +51,10 @@
         </v-col>
       </v-row>
 
-      <v-row class="justify-center text-center mt-15">
+      <v-row class="justify-center text-center mt-5">
         <v-col cols="8" data-cy="project-tag-so-container">
           <v-text-field
-            v-model="form.tagStackOverflow"
+            v-model="form.tag_so"
             :rules="[required]"
             data-cy="project-tag-so"
           >
@@ -65,10 +66,10 @@
         </v-col>
       </v-row>
 
-      <v-row class="justify-center text-center mt-15">
+      <v-row class="justify-center text-center mt-5">
         <v-col cols="8" data-cy="project-link-gh-container">
           <v-text-field
-            v-model="form.linkGitHub"
+            v-model="form.link_gh"
             :rules="[required]"
             data-cy="project-link-gh"
           >
@@ -80,7 +81,31 @@
         </v-col>
       </v-row>
 
-     <v-row class="justify-center text-center mt-15">
+      <v-row class="justify-center text-center mt-5">
+        <v-col cols="8" data-cy="project-is-dead-container">
+          <v-switch
+            v-model="form.is_dead"
+            label="This project is dead?"
+            data-cy="project-id-dead"
+          ></v-switch>
+        </v-col>
+      </v-row>
+
+      <v-row v-if="form.is_dead" class="justify-center text-center mt-5">
+        <v-col cols="8" data-cy="project-is-dead-container">
+          <v-label>
+            <span>Select the project death date</span>
+            <span class="mandatory">*</span>
+          </v-label><br/>
+          <v-date-picker
+            v-model="form.death_date"
+            :rules="[required]"
+            data-cy="project-death-date"
+          ></v-date-picker>
+        </v-col>
+      </v-row>
+
+      <v-row class="justify-center text-center mt-5">
         <v-col cols="8">
           <v-btn
             color="success"
