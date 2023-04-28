@@ -1,4 +1,6 @@
 <script>
+  import axios from "axios"
+
   export default {
     name: 'ProjectRegister',
 
@@ -9,16 +11,24 @@
         tag_so: null,
         link_gh: null,
         is_dead: false,
+        death_date: null,
       }
     }),
 
     methods: {
-      validate () {
-        this.$refs.form.validate()
+      async createProject () {
+        if (!this.$refs.form.validate()) {
+          return false
+        }
+        const apiResponse = await axios.post(
+          `${process.env.VUE_APP_API_HOST}/project`,
+          this.form
+        )
+        console.log(apiResponse)
       },
       required: (v) => !!v || 'This field is required',
       isBeforeNow: (d) => new Date(d) <= new Date()
-    }
+    },
   }
 </script>
 
@@ -112,7 +122,7 @@
           <v-btn
             color="success"
             class="float-right"
-            @click="validate"
+            @click="createProject()"
             data-cy="btn-submit"
           >
             Submit
