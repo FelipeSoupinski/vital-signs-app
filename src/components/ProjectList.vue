@@ -1,4 +1,6 @@
 <script>
+  import axios from "axios"
+
   export default {
     name: 'ProjectList',
 
@@ -15,58 +17,30 @@
           text: 'Tag in Stack Overflow',
           align: 'start',
           filterable: true,
-          value: 'tagStackOverflow'
+          value: 'tag_so'
         },
         { 
           text: 'Link in GitHub',
           align: 'start',
           filterable: false,
-          value: 'linkGitHub'
+          value: 'link_gh'
         },
       ],
-      projects: [
-        { 
-          name: "Angular.js", 
-          tagStackOverflow: "angularjs", 
-          linkGitHub: "github.com/angularjs" 
-        },
-        { 
-          name: "Moment.js", 
-          tagStackOverflow: "momentjs", 
-          linkGitHub: "github.com/momentjs" 
-        },
-        { 
-          name: "PhantomJS", 
-          tagStackOverflow: "phantomjs", 
-          linkGitHub: "github.com/phantomjs" 
-        },
-      ],
+      projects: [],
     }),
 
-    mounted() {
-      const items = []
-      for (let i = 0; i < 50; i++) {
-        const randomString = this.getRandomString(10)
-        items.push({
-          name: randomString,
-          tagStackOverflow: randomString,
-          linkGitHub: "github.com/" + randomString
-        })
-      }
-      this.projects.push(...items)
+    async mounted() {
+      const apiResponse = await axios.get(
+        `${process.env.VUE_APP_API_HOST}/projects`,
+        this.form
+      )
+      console.log(apiResponse)
+      this.projects.push(...apiResponse.data.projects)
     },
 
     methods: {
-      getRandomString(length) {
-        let randomString = ''
-        const caracteres = 'abcdefghijklmnopqrstuvwxyz'
-        for (var i = 0; i < length; i++) {
-          randomString += caracteres.charAt(Math.floor(Math.random() * caracteres.length))
-        }
-        return randomString
-      },
       changeRoute(element) {
-        this.$router.push('/projects/' + element.tagStackOverflow)
+        this.$router.push('/projects/' + element.tag_so)
       }
     }
   }
