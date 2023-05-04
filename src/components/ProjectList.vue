@@ -25,16 +25,30 @@
           filterable: false,
           value: 'link_gh'
         },
+        { 
+          text: 'Is dead?',
+          align: 'start',
+          filterable: false,
+          value: 'is_dead',
+          getter: (is_dead) => is_dead ? 'Yes' : 'No'
+        },
       ],
       projects: [],
     }),
 
+    computed: {
+      projectsComputed() {
+        return this.projects.map(project => ({
+          ...project,
+          is_dead: (project.is_dead ? 'Yes' : 'No')
+        }))
+      },  
+    },
+
     async mounted() {
       const apiResponse = await axios.get(
-        `${process.env.VUE_APP_API_HOST}/projects`,
-        this.form
+        `${process.env.VUE_APP_API_HOST}/projects`
       )
-      console.log(apiResponse)
       this.projects.push(...apiResponse.data.projects)
     },
 
@@ -61,11 +75,12 @@
       </v-card-title>
       <v-data-table
         :headers="headers"
-        :items="projects"
+        :items="projectsComputed"
         :search="search"
         @click:row="changeRoute($event)"
         data-cy="projects-list"
-      ></v-data-table>
+      >
+      </v-data-table>
     </v-card>
   </v-container>
 </template>
