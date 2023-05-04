@@ -24,7 +24,18 @@
           `${process.env.VUE_APP_API_HOST}/project`,
           this.form
         )
-        console.log(apiResponse)
+        if (apiResponse.data.success) {
+          this.$showAlert({
+            title: 'Project added',
+            icon: 'success'
+          })
+          this.$router.push('/projects')
+        } else {
+          this.$showAlert({
+            title: 'Error on add project',
+            icon: 'error'
+          })
+        }
       },
       required: (v) => !!v || 'This field is required',
       isBeforeNow: (d) => new Date(d) <= new Date()
