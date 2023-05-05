@@ -11,6 +11,17 @@
 
       <v-spacer></v-spacer>
 
+      <router-link to="/scheduler">
+        <v-btn
+          class="ma-1"
+          color="white"
+          plain
+          data-cy="scheduler"
+        >
+          Scheduler
+        </v-btn>
+      </router-link>
+
       <router-link to="/projects">
         <v-btn
           class="ma-1"

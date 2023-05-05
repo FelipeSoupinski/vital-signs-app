@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import ProjectListView from '../views/ProjectListView.vue'
 import ProjectInfoView from '../views/ProjectInfoView.vue'
+import SchedulerView from '../views/SchedulerView.vue'
 
 Vue.use(VueRouter)
 
@@ -25,7 +26,12 @@ const routes = [
     path: '/projects/:id',
     name: 'projects-info',
     component: ProjectInfoView
-  }
+  },
+  {
+    path: '/scheduler',
+    name: 'scheduler',
+    component: SchedulerView
+  },
 ]
 
 const router = new VueRouter({
