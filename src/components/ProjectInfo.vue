@@ -8,7 +8,7 @@
       ChartGenerator
     },
     data: () => ({
-      answerRates: null
+      answerRates: []
     }),
 
     computed: {
@@ -38,8 +38,8 @@
     <div class="text-center">
       <h1>{{ getProjectName }}</h1>
     </div>
-    <div class="mt-15" data-cy="project-info-chart">
-      <chart-generator :chart-data="answerRates"></chart-generator>
+    <div class="row mt-15" data-cy="project-info-chart">
+      <chart-generator v-model="answerRates"></chart-generator>
     </div>
 
   </v-container>
