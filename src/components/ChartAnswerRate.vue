@@ -14,7 +14,9 @@
     },
     data: () => ({
       chartData: null,
-      myChart: null
+      myChart: null,
+      startDate: null,
+      endDate: null
     }),
     watch: {
       value: {
@@ -88,7 +90,10 @@
         this.myChart.update()
 
         this.$emit('input', this.value)
-      }
+      },
+      filterDateRange() {
+
+      },
     }
 }
 </script>
@@ -98,16 +103,18 @@
     <div class="row">
       <div class="col col-4 col-lg-2 col-md-2 col-sm-3 col-xs-6">
         <date-picker
+          v-model="startDate"
           :label="'Start Date'"
         ></date-picker>
       </div>
       <div class="col col-4 col-lg-2 col-md-2 col-sm-3 col-xs-6">
         <date-picker
+          v-model="endDate"
           :label="'End Date'"
         ></date-picker>
       </div>
       <div class="col col-4 col-lg-2 col-md-2 col-sm-3 col-xs-6 pt-5">
-        <v-btn color="blue darken-1" dark @click="openFilterDialog">
+        <v-btn color="blue darken-1" dark @click="filterDateRange">
           <v-icon>mdi-filter</v-icon>
           Filter
         </v-btn>
