@@ -47,7 +47,8 @@
     },
     methods: {
       createChart() {
-        const ctx = this.$refs.myChart.getContext('2d');
+        const ctx = this.$refs.myChart.getContext('2d')
+        const maxValue = Math.max(...this.value.map(data => data.answer_rate))
 
         this.chartData = {
           type: 'line',
@@ -57,8 +58,10 @@
               label: 'Answer Rate',
               data: this.value.map(data => data.answer_rate),
               backgroundColor: 'transparent',
-              borderColor: 'rgba(255, 99, 132, 1)',
-              borderWidth: 1
+              borderColor: 'blue',
+              borderWidth: 1,
+              pointBackgroundColor: this.value.map((data) => data.answer_rate === maxValue ? 'red' : 'transparent'),
+              pointBorderColor: this.value.map((data) => data.answer_rate === maxValue ? 'red' : 'blue'),
             }]
           },
           options: {
@@ -102,6 +105,15 @@
       updateChartData() {
         this.chartData.data.labels = this.answerRatesComputed.map(data => data.month)
         this.chartData.data.datasets[0].data = this.answerRatesComputed.map(data => data.answer_rate)
+
+        if (this.project.is_dead && this.project.death_date) {
+          const projectDeathDate = new Date(this.project.death_date).toISOString().slice(0, 10)
+          const monthIndex = this.chartData.data.labels.indexOf(projectDeathDate)
+          if (monthIndex !== -1) {
+            this.chartData.data.datasets[0].pointBackgroundColor[monthIndex] = 'red'
+            this.chartData.data.datasets[0].pointBorderColor[monthIndex] = 'red'
+          }
+        }
 
         this.myChart.update()
 
@@ -158,6 +170,13 @@
     <div class="row">
       <div class="col col-12">
         <canvas ref="myChart"></canvas>
+        <div v-if="project.is_dead" class="chart-legend">
+          <span class="legend-dot"></span>
+          <span class="legend-label">
+            Death date 
+            {{ project.death_date.slice(0, 10).split('-').reverse().join('/') }}
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -166,5 +185,26 @@
 <style>
   .justify-content-end {
     justify-content: flex-end;
+  }
+  
+  .chart-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .legend-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+    background-color: red;
+  }
+  
+  .legend-label {
+    font-size: 14px;
+    font-weight: bold;
   }
 </style>
