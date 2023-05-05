@@ -48,7 +48,6 @@
     methods: {
       createChart() {
         const ctx = this.$refs.myChart.getContext('2d')
-        const maxValue = Math.max(...this.value.map(data => data.answer_rate))
 
         this.chartData = {
           type: 'line',
@@ -60,8 +59,8 @@
               backgroundColor: 'transparent',
               borderColor: 'blue',
               borderWidth: 1,
-              pointBackgroundColor: this.value.map((data) => data.answer_rate === maxValue ? 'red' : 'transparent'),
-              pointBorderColor: this.value.map((data) => data.answer_rate === maxValue ? 'red' : 'blue'),
+              pointBackgroundColor: this.value.map(() => 'transparent'),
+              pointBorderColor: this.value.map(() => 'blue'),
             }]
           },
           options: {
