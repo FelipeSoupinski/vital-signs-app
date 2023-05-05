@@ -111,31 +111,40 @@
           return month >= start && month <= end
         })
       },
+      clearFilter() {
+        this.valueFiltered = null
+      },
     }
 }
 </script>
 
 <template>
-  <div>
-    <div class="row">
-      <div class="col col-4 col-lg-2 col-md-2 col-sm-3 col-xs-6">
+  <div class="container">
+    <div class="row justify-content-end">
+      <div class="col col-6 col-lg-2 col-md-2 col-sm-3">
         <date-picker
           v-model="startDate"
           :label="'Start Month'"
           :type="'month'"
         ></date-picker>
       </div>
-      <div class="col col-4 col-lg-2 col-md-2 col-sm-3 col-xs-6">
+      <div class="col col-6 col-lg-2 col-md-2 col-sm-3">
         <date-picker
           v-model="endDate"
           :label="'End Month'"
           :type="'month'"
         ></date-picker>
       </div>
-      <div class="col col-4 col-lg-2 col-md-2 col-sm-3 col-xs-6 pt-5">
+      <div class="col col-6 col-lg-2 col-md-2 col-sm-3 pt-5">
         <v-btn color="blue darken-1" dark @click="filterDateRange">
           <v-icon>mdi-filter</v-icon>
           Filter
+        </v-btn>
+      </div>
+      <div class="col col-6 col-lg-2 col-md-2 col-sm-3 pt-5">
+        <v-btn color="red darken-1" dark @click="clearFilter">
+          <v-icon>mdi-close</v-icon>
+          Clear
         </v-btn>
       </div>
     </div>
@@ -146,3 +155,9 @@
     </div>
   </div>
 </template>
+
+<style>
+  .justify-content-end {
+    justify-content: flex-end;
+  }
+</style>
