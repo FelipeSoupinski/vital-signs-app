@@ -20,9 +20,11 @@
         if (!this.$refs.form.validate()) {
           return false
         }
+        const form = Object.assign({}, this.form)
+        form.death_date = new Date(form.death_date)
         const apiResponse = await axios.post(
           `${process.env.VUE_APP_API_HOST}/project`,
-          this.form
+          form
         )
         if (apiResponse.data.success) {
           this.$showAlert({
