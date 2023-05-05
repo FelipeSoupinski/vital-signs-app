@@ -13,10 +13,11 @@
       }
     },
     data: () => ({
+      valueFiltered: null,
       chartData: null,
       myChart: null,
-      startDate: null,
-      endDate: null
+      startDate: new Date().toISOString().slice(0, 10),
+      endDate: new Date().toISOString().slice(0, 10)
     }),
     watch: {
       value: {
@@ -24,6 +25,17 @@
           this.updateChartData()
         },
         deep: true
+      },
+      valueFiltered: {
+        handler() {
+          this.updateChartData()
+        },
+        deep: true
+      },
+    },
+    computed: {
+      answerRatesComputed() {
+        return this.valueFiltered ? this.valueFiltered : this.value 
       }
     },
     mounted() {
@@ -84,15 +96,20 @@
         this.$emit('input', this.value)
       },
       updateChartData() {
-        this.chartData.data.labels = this.value.map(data => data.month)
-        this.chartData.data.datasets[0].data = this.value.map(data => data.answer_rate)
+        this.chartData.data.labels = this.answerRatesComputed.map(data => data.month)
+        this.chartData.data.datasets[0].data = this.answerRatesComputed.map(data => data.answer_rate)
 
         this.myChart.update()
 
         this.$emit('input', this.value)
       },
       filterDateRange() {
-
+        const start = new Date(this.startDate)
+        const end = new Date(this.endDate)
+        this.valueFiltered = this.value.filter(item => {
+          const month = new Date(item.month)
+          return month >= start && month <= end
+        })
       },
     }
 }
@@ -104,14 +121,14 @@
       <div class="col col-4 col-lg-2 col-md-2 col-sm-3 col-xs-6">
         <date-picker
           v-model="startDate"
-          :label="'Start Date'"
+          :label="'Start Month'"
           :type="'month'"
         ></date-picker>
       </div>
       <div class="col col-4 col-lg-2 col-md-2 col-sm-3 col-xs-6">
         <date-picker
           v-model="endDate"
-          :label="'End Date'"
+          :label="'End Month'"
           :type="'month'"
         ></date-picker>
       </div>
