@@ -10,6 +10,10 @@
       value: {
         type: Array,
         required: true
+      },
+      project: {
+        type: Object,
+        required: true
       }
     },
     data: () => ({
@@ -121,6 +125,9 @@
 <template>
   <div class="container">
     <div class="row justify-content-end">
+      <div class="col col-4">
+        <h2>{{ this.project.name }}</h2>
+      </div>
       <div class="col col-6 col-lg-2 col-md-2 col-sm-3">
         <date-picker
           v-model="startDate"
