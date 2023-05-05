@@ -1,11 +1,11 @@
 <script>
   import axios from "axios"
-  import ChartGenerator from './ChartGenerator.vue'
+  import ChartAnswerRate from './ChartAnswerRate.vue'
 
   export default {
     name: 'ProjectInfo',
     components: {
-      ChartGenerator
+      ChartAnswerRate
     },
     data: () => ({
       answerRates: []
@@ -24,7 +24,6 @@
         `${process.env.VUE_APP_API_HOST}/answer-rate/${projectTag}`
       )
       this.answerRates = apiResponse.data.answer_rates
-      console.log('this.answerRates', this.answerRates)
     },
 
     methods: {
@@ -39,7 +38,9 @@
       <h1>{{ getProjectName }}</h1>
     </div>
     <div class="row mt-15" data-cy="project-info-chart">
-      <chart-generator v-model="answerRates"></chart-generator>
+      <div class="col col-12">
+        <chart-answer-rate v-model="answerRates"></chart-answer-rate>
+      </div>
     </div>
 
   </v-container>

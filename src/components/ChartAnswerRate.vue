@@ -40,31 +40,50 @@
             }]
           },
           options: {
+            responsive: true,
+            maintainAspectRatio: true,
             scales: {
+              xAxes: [{
+                type: 'time',
+                time: {
+                  unit: 'month',
+                  displayFormats: {
+                    month: 'MM/YYYY'
+                  }
+                },
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Month'
+                }
+              }],
               yAxes: [{
                 ticks: {
                   beginAtZero: true
+                },
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Answer Rate'
                 }
               }]
             }
           }
-        };
+        }
 
         this.myChart = new Chart(ctx, {
           type: this.chartData.type,
           data: this.chartData.data,
           options: this.chartData.options
-        });
+        })
 
-        this.$emit('input', this.value);
+        this.$emit('input', this.value)
       },
       updateChartData() {
         this.chartData.data.labels = this.value.map(data => data.month)
         this.chartData.data.datasets[0].data = this.value.map(data => data.answer_rate)
 
-        this.myChart.update();
+        this.myChart.update()
 
-        this.$emit('input', this.value);
+        this.$emit('input', this.value)
       }
     }
 }
