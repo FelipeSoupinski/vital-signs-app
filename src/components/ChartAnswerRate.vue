@@ -1,7 +1,11 @@
 <script>
   import Chart from 'chart.js'
+  import DatePicker from './DatePicker.vue'
 
   export default {
+    components: {
+      DatePicker
+    },
     props: {
       value: {
         type: Array,
@@ -90,5 +94,29 @@
 </script>
 
 <template>
-  <canvas ref="myChart"></canvas>
+  <div>
+    <div class="row">
+      <div class="col col-4 col-lg-2 col-md-2 col-sm-3 col-xs-6">
+        <date-picker
+          :label="'Start Date'"
+        ></date-picker>
+      </div>
+      <div class="col col-4 col-lg-2 col-md-2 col-sm-3 col-xs-6">
+        <date-picker
+          :label="'End Date'"
+        ></date-picker>
+      </div>
+      <div class="col col-4 col-lg-2 col-md-2 col-sm-3 col-xs-6 pt-5">
+        <v-btn color="blue darken-1" dark @click="openFilterDialog">
+          <v-icon>mdi-filter</v-icon>
+          Filter
+        </v-btn>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-12">
+        <canvas ref="myChart"></canvas>
+      </div>
+    </div>
+  </div>
 </template>
