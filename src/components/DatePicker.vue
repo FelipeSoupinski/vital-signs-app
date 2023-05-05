@@ -8,7 +8,11 @@
       label: {
         type: String,
         default: 'Date',
-      }
+      },
+      type: {
+        type: String,
+        default: 'date',
+      },
     },
     data: () => ({
       date: null,
@@ -27,6 +31,9 @@
         const date = new Date(this.date)
         const timezoneOffset = date.getTimezoneOffset()
         const newDate = new Date(date.getTime() + timezoneOffset * 60 * 1000)
+        if (this.type === 'month') {
+          return newDate.toLocaleDateString('en-US', { month: '2-digit', year: 'numeric' });
+        }
         return newDate.toLocaleDateString()
       }
     },
@@ -47,11 +54,21 @@
       @click="showDatePicker = true" 
       readonly 
     />
-    <v-dialog v-model="showDatePicker">
+    <v-dialog 
+      v-model="showDatePicker"
+      content-class="dialog-date-picker"
+    >
       <v-date-picker 
-        v-model="date" 
+        v-model="date"
+        :type="type" 
         @input="updateValue"
       ></v-date-picker>
     </v-dialog>
   </div>
 </template>
+
+<style>
+  .dialog-date-picker {
+    max-width: 320px;
+  }
+</style>

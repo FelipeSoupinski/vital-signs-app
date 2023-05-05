@@ -37,7 +37,7 @@
     <div class="text-center">
       <h1>{{ getProjectName }}</h1>
     </div>
-    <div class="row mt-15" data-cy="project-info-chart">
+    <div class="row mt-5" data-cy="project-info-chart">
       <div class="col col-12">
         <chart-answer-rate v-model="answerRates"></chart-answer-rate>
       </div>

@@ -105,12 +105,14 @@
         <date-picker
           v-model="startDate"
           :label="'Start Date'"
+          :type="'month'"
         ></date-picker>
       </div>
       <div class="col col-4 col-lg-2 col-md-2 col-sm-3 col-xs-6">
         <date-picker
           v-model="endDate"
           :label="'End Date'"
+          :type="'month'"
         ></date-picker>
       </div>
       <div class="col col-4 col-lg-2 col-md-2 col-sm-3 col-xs-6 pt-5">
